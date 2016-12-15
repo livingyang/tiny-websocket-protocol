@@ -1,3 +1,4 @@
+let fs = require('fs');
 let config = require('./twp.json');
 
 let result = '';
@@ -62,3 +63,4 @@ for (let key in config) {
 }
 
 console.log(result);
+fs.writeFileSync(`${__dirname}/../src/message.ts`, result);

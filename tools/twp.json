@@ -1,6 +1,10 @@
 {
+    "LoginRsp": {},
     "FrameNotice": {
         "ms": 0
     },
-    "LoginRsp": {}
+    "GetWalletReq": {
+        "money": 0,
+        "diamond": 0
+    }
 }

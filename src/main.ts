@@ -1,5 +1,5 @@
 import { GenerateMessage } from './protocol';
-import { FrameNotice, LoginRsp, MessageId, TypedWebSocketMessageHandle } from './message';
+import { FrameNotice, LoginRsp, GetWalletReq, MessageId, TypedWebSocketMessageHandle } from './message';
 
 let buffer = [MessageId.FrameNotice, 13];
 let message = GenerateMessage(buffer);
@@ -23,6 +23,11 @@ class Handle {
         console.log('onLoginRsp');
         console.log(m);
     }
+
+    getWalletRsp(m: GetWalletReq) {
+        console.log('getWalletRsp');
+        console.log(m);
+    }
 }
 
 let handle = new Handle;
@@ -30,8 +35,13 @@ let handle = new Handle;
 let mh = new TypedWebSocketMessageHandle();
 
 mh.onFrameNotice(handle, handle.frameNotice);
-
 mh.onLoginRsp(handle, handle.loginRsp);
+mh.onGetWalletReq(handle, handle.getWalletRsp);
 
 mh.emit(f1);
 mh.emit(message);
+
+let m = new GetWalletReq();
+m.money = 100;
+m.diamond = 300;
+mh.emit(m);
