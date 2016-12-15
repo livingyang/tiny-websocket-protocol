@@ -1,22 +1,19 @@
-export enum MessageId {
-    FrameNotice,
-    LoginRsp,
-}
+export type Buffer = any[]; // Buffer[0] == MessageId
 
-class Message {
-    buffer: Buffer = [];
+export class Message {
+    buffer: Buffer;
+    getId(): number {
+        return (this.buffer != null && this.buffer.length > 0) ? this.buffer[0] : -1;
+    }
 }
 
 interface MessageClass {
     new(): Message;
 }
 
-let MessageMap: {[id: number]: MessageClass} = {};
-
-// Buffer[0] == MessageId 
-type Buffer = any[];
-
-export function GeneratorMessage(buffer: Buffer) {
+// ------------ Message Generator
+export let MessageMap: {[id: number]: MessageClass} = {};
+export function GenerateMessage(buffer: Buffer) {
     if (buffer != null && MessageMap[buffer[0]] != null) {
         let message = new MessageMap[buffer[0]];
         if (message.buffer.length === buffer.length) {
@@ -28,25 +25,45 @@ export function GeneratorMessage(buffer: Buffer) {
     return null;
 }
 
-export class FrameNotice extends Message
-{
-    buffer = [MessageId.FrameNotice, 0];
+// ------------- WebSocket Message Handle
+// export type MessageHandle = (m: Message) => void;
 
-    get event() {
-        return this.buffer[0];
+interface Invoker {
+    target;
+    handler: Function;
+}
+
+export class WebSocketMessageHandle {
+    eventInvokerMap: {[id: number]: Invoker[]} = {};
+
+    emit(message: Message) {
+        for (let invoker of this.getInvokerList(message.getId())) {
+            invoker.handler.call(invoker.target, message);
+        }
     }
 
-    get frame() {
-        return this.buffer[1];
+    getInvokerList(event: number) {
+        return this.eventInvokerMap[event] || [];
     }
 
-    set frame(ms: number) {
-        this.buffer[1] = ms;
+    on(event: number | string, target, handler: Function = target[event]) {
+        if (handler == null) {
+            throw `Client.on event: ${event}, handle is null`;
+        }
+        if (this.eventInvokerMap[event] == null) {
+            this.eventInvokerMap[event] = [];
+        }
+
+        if (target != null) {
+            this.eventInvokerMap[event].push({ target: target, handler: handler });
+        }
+    }
+
+    off(event: number | string, target, handler: Function = target[event]) {
+        if (this.eventInvokerMap[event] != null) {
+            this.eventInvokerMap[event] = this.eventInvokerMap[event].filter((v, i, a) => {
+                return (target !== v.target || handler !== v.handler);
+            });
+        }
     }
 }
-MessageMap[MessageId.FrameNotice] = FrameNotice;
-
-export class LoginRsp extends Message {
-    buffer = [MessageId.LoginRsp];
-}
-MessageMap[MessageId.LoginRsp] = LoginRsp;
