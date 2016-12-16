@@ -1,5 +1,4 @@
-import { GenerateMessage } from './protocol';
-import { FrameNotice, LoginRsp, GetWalletReq, MessageId, TypedWebSocketMessageHandle } from './message';
+import { FrameNotice, LoginRsp, GetWalletReq, MessageId,  GenerateMessage, TypedWebSocketMessageHandle } from './protocol';
 
 let buffer = [MessageId.FrameNotice, 13];
 let message = GenerateMessage(buffer);
