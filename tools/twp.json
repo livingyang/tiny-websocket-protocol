@@ -3,8 +3,28 @@
     "FrameNotice": {
         "ms": 0
     },
+    "UserDataNotice": {
+        "account": ""
+    },
+    "MatchingSuccessRsp": {
+        "selfAccount": "",
+        "accountList": [""]
+    },
     "GetWalletReq": {
         "money": 0,
         "diamond": 0
+    },
+    "TestObjectReq": {
+        "obj": {"num": 1},
+        "array": [
+            {
+                "str": "",
+                "subArray": [0],
+                "subObj": {
+                    "num": 1
+                }
+            }
+        ],
+        "nullobj": null
     }
 }

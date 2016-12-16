@@ -1,8 +1,45 @@
 let fs = require('fs');
 let config = require('./twp.json');
 
-let result = '';
+function GetObjectInterface(obj) {
+    if (typeof(obj) === 'object') {
+        if (obj instanceof Array) {
+            if (obj.length > 0) {
+                return `${GetObjectInterface(obj[0])}[]`;
+            }
+            else {
+                return 'any[]';
+            }
+        }
+        else {
+            if (obj == null) {
+                return 'any';
+            }
+            else {
+                let keyCount = 0;
+                let result = '';
+                result += '{';
+                for (let key in obj) {
+                    ++keyCount;
+                    result += `${key}: ${GetObjectInterface(obj[key])}, `;
+                }
+                if (keyCount > 0) {
+                    // result += '}';
+                    // result[result.length - 1] = '}';
+                    return result.substr(0, result.length - 2) + '}';
+                }
+                else {
+                    return any;
+                }
+            }
+        }
+    }
+    else {
+        return typeof(obj);
+    }
+}
 
+let result = '';
 // 输出 import
 result += "import { Message, MessageMap, WebSocketMessageHandle } from './protocol';\n\n";
 
@@ -35,10 +72,17 @@ for (let key in config) {
     let value = config[key];
     result += `export class ${key} extends Message {\n`;
 
-    // 输出类的默认数据
-    result += `    buffer = [MessageId.${key}`;
+    // 输出buff的默认类型
+    result += '    buffer: [MessageId';
     for (let field in value) {
-        result += `, ${value[field]}`;
+        result += `, ${GetObjectInterface(value[field])}`;
+    }
+    result += '] = ';
+
+    // 输出buff的默认数据
+    result += `[MessageId.${key}`;
+    for (let field in value) {
+        result += `, ${JSON.stringify(value[field])}`;
     }
     result += '];\n'
 
@@ -51,7 +95,7 @@ for (let key in config) {
         result += '    }\n';
 
         // set
-        result += `    set ${field}(${field}: ${typeof value[field]}) {\n`;
+        result += `    set ${field}(${field}: ${GetObjectInterface(value[field])}) {\n`;
         result += `        this.buffer[${fieldIndex}] = ${field};\n`
         result += '    }\n';
         
