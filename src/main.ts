@@ -1,46 +1,22 @@
-import { FrameNotice, LoginRsp, GetWalletReq, MessageId,  GenerateMessage, TypedWebSocketMessageHandle } from './protocol';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as program from 'commander';
+import {Convert} from '../tools/generator';
 
-let buffer = [MessageId.FrameNotice, 13];
-let message = GenerateMessage(buffer);
-let f1 = new FrameNotice;
-f1.ms = 50;
-console.log(f1);
-console.log(message);
+program.version(require(path.join(__dirname, '../..', 'package.json'))['version']);
 
-buffer = [MessageId.LoginRsp];
-message = GenerateMessage(buffer);
-console.log(message);
-console.log(message.buffer);
+program
+  .option('-f, --file <path>', 'json path.')
+  .option('-o, --outFile <path>', 'out ts file path.')
+  .parse(process.argv);
 
-class Handle {
-    frameNotice(m: FrameNotice) {
-        console.log('onFrameNotice');
-        console.log(m);
-    }
+let file = program['file'];
+let outFile = program['outFile'] || `${file}.ts`;
 
-    loginRsp(m: LoginRsp) {
-        console.log('onLoginRsp');
-        console.log(m);
-    }
-
-    getWalletRsp(m: GetWalletReq) {
-        console.log('getWalletRsp');
-        console.log(m);
-    }
+if (fs.existsSync(file)) {
+    fs.writeFileSync(outFile, Convert(JSON.parse(fs.readFileSync(file).toString())))
+    console.log(`twp convert to: ${outFile}`);
 }
-
-let handle = new Handle;
-
-let mh = new TypedWebSocketMessageHandle();
-
-mh.onFrameNotice(handle, handle.frameNotice);
-mh.onLoginRsp(handle, handle.loginRsp);
-mh.onGetWalletReq(handle, handle.getWalletRsp);
-
-mh.emit(f1);
-mh.emit(message);
-
-let m = new GetWalletReq();
-m.money = 100;
-m.diamond = 300;
-mh.emit(m);
+else {
+    console.log(`Not found json file: ${file}`);
+}
