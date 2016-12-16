@@ -1,6 +1,6 @@
-let fs = require('fs');
+import * as fs from 'fs';
 
-function GetObjectInterface(obj) {
+function GetObjectInterface(obj): string {
     if (typeof(obj) === 'object') {
         if (obj instanceof Array) {
             if (obj.length > 0) {
@@ -28,7 +28,7 @@ function GetObjectInterface(obj) {
                     return result.substr(0, result.length - 2) + '}';
                 }
                 else {
-                    return any;
+                    return 'any';
                 }
             }
         }
@@ -38,13 +38,11 @@ function GetObjectInterface(obj) {
     }
 }
 
-function Convert(jsonObject) {
+export function Convert(jsonObject) {
     let result = '';
 
     // 加入头部
-    result += fs.readFileSync(`${__dirname}/protocol.ts`); 
-    // 输出 import
-    // result += "import { Message, MessageMap, WebSocketMessageHandle } from './protocol';\n\n";
+    result += fs.readFileSync(`${__dirname}/../../tools/template.ts`);
 
     // 输出 MessageId
     result += 'export enum MessageId {\n';
@@ -111,5 +109,5 @@ function Convert(jsonObject) {
 
     return result;
 }
-fs.writeFileSync(`${__dirname}/../src/protocol.ts`, Convert(require('./twp.json')));
-console.log('write down');
+// fs.writeFileSync(`${__dirname}/../src/protocol.ts`, Convert(require('./twp.json')));
+// console.log('write down');
