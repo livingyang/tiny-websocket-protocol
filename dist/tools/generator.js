@@ -23,8 +23,6 @@ function GetObjectInterface(obj) {
                     result += key + ": " + GetObjectInterface(obj[key]) + ", ";
                 }
                 if (keyCount > 0) {
-                    // result += '}';
-                    // result[result.length - 1] = '}';
                     return result.substr(0, result.length - 2) + '}';
                 }
                 else {
@@ -95,6 +93,4 @@ function Convert(jsonObject) {
     return result;
 }
 exports.Convert = Convert;
-// fs.writeFileSync(`${__dirname}/../src/protocol.ts`, Convert(require('./twp.json')));
-// console.log('write down'); 
 //# sourceMappingURL=generator.js.map

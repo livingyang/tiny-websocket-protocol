@@ -23,8 +23,6 @@ function GetObjectInterface(obj): string {
                     result += `${key}: ${GetObjectInterface(obj[key])}, `;
                 }
                 if (keyCount > 0) {
-                    // result += '}';
-                    // result[result.length - 1] = '}';
                     return result.substr(0, result.length - 2) + '}';
                 }
                 else {
@@ -109,5 +107,3 @@ export function Convert(jsonObject) {
 
     return result;
 }
-// fs.writeFileSync(`${__dirname}/../src/protocol.ts`, Convert(require('./twp.json')));
-// console.log('write down');

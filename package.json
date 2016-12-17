@@ -1,6 +1,6 @@
 {
   "name": "twp",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "tiny-websocket-protocol",
   "main": "bin/twp",
   "directories": {
@@ -14,7 +14,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node dist/src/twp.js"
   },
   "repository": {
     "type": "git",
