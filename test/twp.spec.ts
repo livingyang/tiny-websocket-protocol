@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as assert from 'assert';
 import {Convert} from '../tools/generator';
-import {GenerateMessage, FrameNotice, LoginRsp} from '../src/protocol'
+import {GenerateMessage, FrameNotice, LoginRsp, TypedWebSocketMessageHandle} from '../src/protocol'
 
 describe('twp', function() {
     it('json to protocol', function() {

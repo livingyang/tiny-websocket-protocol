@@ -119,11 +119,13 @@ export class TypedWebSocketMessageHandle extends WebSocketMessageHandle {
 
 export class LoginRsp extends Message {
     buffer: [MessageId] = [MessageId.LoginRsp];
+    LoginRsp() {}
 }
 MessageMap[MessageId.LoginRsp] = LoginRsp;
 
 export class FrameNotice extends Message {
     buffer: [MessageId, number] = [MessageId.FrameNotice, 0];
+    FrameNotice() {}
     get ms() {
         return this.buffer[1];
     }
@@ -135,6 +137,7 @@ MessageMap[MessageId.FrameNotice] = FrameNotice;
 
 export class UserDataNotice extends Message {
     buffer: [MessageId, string] = [MessageId.UserDataNotice, ""];
+    UserDataNotice() {}
     get account() {
         return this.buffer[1];
     }
@@ -146,6 +149,7 @@ MessageMap[MessageId.UserDataNotice] = UserDataNotice;
 
 export class MatchingSuccessRsp extends Message {
     buffer: [MessageId, string, string[]] = [MessageId.MatchingSuccessRsp, "", [""]];
+    MatchingSuccessRsp() {}
     get selfAccount() {
         return this.buffer[1];
     }
@@ -163,6 +167,7 @@ MessageMap[MessageId.MatchingSuccessRsp] = MatchingSuccessRsp;
 
 export class GetWalletReq extends Message {
     buffer: [MessageId, number, number] = [MessageId.GetWalletReq, 0, 0];
+    GetWalletReq() {}
     get money() {
         return this.buffer[1];
     }
@@ -180,6 +185,7 @@ MessageMap[MessageId.GetWalletReq] = GetWalletReq;
 
 export class TestObjectReq extends Message {
     buffer: [MessageId, {num: number}, {str: string, subArray: number[], subObj: {num: number}}[], any] = [MessageId.TestObjectReq, {"num":1}, [{"str":"","subArray":[0],"subObj":{"num":1}}], null];
+    TestObjectReq() {}
     get obj() {
         return this.buffer[1];
     }

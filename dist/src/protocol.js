@@ -122,6 +122,7 @@ var LoginRsp = (function (_super) {
         _super.apply(this, arguments);
         this.buffer = [MessageId.LoginRsp];
     }
+    LoginRsp.prototype.LoginRsp = function () { };
     return LoginRsp;
 }(Message));
 exports.LoginRsp = LoginRsp;
@@ -132,6 +133,7 @@ var FrameNotice = (function (_super) {
         _super.apply(this, arguments);
         this.buffer = [MessageId.FrameNotice, 0];
     }
+    FrameNotice.prototype.FrameNotice = function () { };
     Object.defineProperty(FrameNotice.prototype, "ms", {
         get: function () {
             return this.buffer[1];
@@ -152,6 +154,7 @@ var UserDataNotice = (function (_super) {
         _super.apply(this, arguments);
         this.buffer = [MessageId.UserDataNotice, ""];
     }
+    UserDataNotice.prototype.UserDataNotice = function () { };
     Object.defineProperty(UserDataNotice.prototype, "account", {
         get: function () {
             return this.buffer[1];
@@ -172,6 +175,7 @@ var MatchingSuccessRsp = (function (_super) {
         _super.apply(this, arguments);
         this.buffer = [MessageId.MatchingSuccessRsp, "", [""]];
     }
+    MatchingSuccessRsp.prototype.MatchingSuccessRsp = function () { };
     Object.defineProperty(MatchingSuccessRsp.prototype, "selfAccount", {
         get: function () {
             return this.buffer[1];
@@ -202,6 +206,7 @@ var GetWalletReq = (function (_super) {
         _super.apply(this, arguments);
         this.buffer = [MessageId.GetWalletReq, 0, 0];
     }
+    GetWalletReq.prototype.GetWalletReq = function () { };
     Object.defineProperty(GetWalletReq.prototype, "money", {
         get: function () {
             return this.buffer[1];
@@ -232,6 +237,7 @@ var TestObjectReq = (function (_super) {
         _super.apply(this, arguments);
         this.buffer = [MessageId.TestObjectReq, { "num": 1 }, [{ "str": "", "subArray": [0], "subObj": { "num": 1 } }], null];
     }
+    TestObjectReq.prototype.TestObjectReq = function () { };
     Object.defineProperty(TestObjectReq.prototype, "obj", {
         get: function () {
             return this.buffer[1];

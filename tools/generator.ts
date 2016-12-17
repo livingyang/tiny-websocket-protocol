@@ -85,6 +85,9 @@ export function Convert(jsonObject) {
         }
         result += '];\n'
 
+        // 为了防止duck 类型匹配，加入每个类的唯一方法
+        result += `    ${key}() {}\n`;
+
         // 输出类的字段
         let fieldIndex = 1;
         for (let field in value) {
