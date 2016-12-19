@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as jsyaml from 'js-yaml';
 
 function GetObjectInterface(obj): string {
     if (typeof(obj) === 'object') {
@@ -109,4 +110,8 @@ export function Convert(jsonObject) {
     }
 
     return result;
+}
+
+export function ConvertYaml(yamlPath: string) {
+    return Convert(jsyaml.safeLoad(fs.readFileSync(yamlPath).toString()));
 }

@@ -1,11 +1,11 @@
 import * as fs from 'fs';
 import * as assert from 'assert';
-import {Convert} from '../tools/generator';
-import {GenerateMessage, FrameNotice, LoginRsp, TypedWebSocketMessageHandle} from '../src/protocol'
+import {ConvertYaml} from '../tools/generator';
+import {GenerateMessage, FrameNotice, LoginRsp, TypedWebSocketMessageHandle} from '../src/twp.yaml'
 
 describe('twp', function() {
     it('json to protocol', function() {
-        assert.equal(Convert(require('../../tools/twp.json')), fs.readFileSync('./src/protocol.ts').toString());
+        assert.equal(ConvertYaml('./src/twp.yaml'), fs.readFileSync('./src/twp.yaml.ts').toString());
     })
 
     it('message', function() {

@@ -5,20 +5,20 @@ var program = require('commander');
 var generator_1 = require('../tools/generator');
 program.version(require(path.join(__dirname, '../..', 'package.json'))['version']);
 program
-    .arguments('<jsonPath> [tsPath]')
-    .usage('jsonPath [tsPath]')
-    .action(function (jsonPath, tsPath) {
-    if (jsonPath == null) {
-        console.log('Please input json path.');
+    .arguments('<yamlPath> [tsPath]')
+    .usage('yamlPath [tsPath]')
+    .action(function (yamlPath, tsPath) {
+    if (yamlPath == null) {
+        console.log('Please input yaml path.');
         return;
     }
-    tsPath = tsPath || jsonPath + '.ts';
-    if (fs.existsSync(jsonPath)) {
-        fs.writeFileSync(tsPath, generator_1.Convert(JSON.parse(fs.readFileSync(jsonPath).toString())));
+    tsPath = tsPath || yamlPath + '.ts';
+    if (fs.existsSync(yamlPath)) {
+        fs.writeFileSync(tsPath, generator_1.ConvertYaml(yamlPath));
         console.log("twp convert to: " + tsPath);
     }
     else {
-        console.log("Not found json file: " + jsonPath);
+        console.log("Not found yaml file: " + yamlPath);
     }
 });
 program.parse(process.argv);

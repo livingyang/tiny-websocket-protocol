@@ -31,9 +31,11 @@ var WebSocketMessageHandle = (function () {
         this.eventInvokerMap = {};
     }
     WebSocketMessageHandle.prototype.emit = function (message) {
-        for (var _i = 0, _a = this.getInvokerList(message.getId()); _i < _a.length; _i++) {
-            var invoker = _a[_i];
-            invoker.handler.call(invoker.target, message);
+        if (message != null) {
+            for (var _i = 0, _a = this.getInvokerList(message.getId()); _i < _a.length; _i++) {
+                var invoker = _a[_i];
+                invoker.handler.call(invoker.target, message);
+            }
         }
     };
     WebSocketMessageHandle.prototype.getInvokerList = function (event) {
@@ -272,4 +274,4 @@ var TestObjectReq = (function (_super) {
 }(Message));
 exports.TestObjectReq = TestObjectReq;
 exports.MessageMap[MessageId.TestObjectReq] = TestObjectReq;
-//# sourceMappingURL=protocol.js.map
+//# sourceMappingURL=twp.yaml.js.map

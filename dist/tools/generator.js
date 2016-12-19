@@ -1,5 +1,6 @@
 "use strict";
 var fs = require('fs');
+var jsyaml = require('js-yaml');
 function GetObjectInterface(obj) {
     if (typeof (obj) === 'object') {
         if (obj instanceof Array) {
@@ -95,4 +96,8 @@ function Convert(jsonObject) {
     return result;
 }
 exports.Convert = Convert;
+function ConvertYaml(yamlPath) {
+    return Convert(jsyaml.safeLoad(fs.readFileSync(yamlPath).toString()));
+}
+exports.ConvertYaml = ConvertYaml;
 //# sourceMappingURL=generator.js.map

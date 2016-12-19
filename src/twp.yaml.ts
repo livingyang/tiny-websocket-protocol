@@ -37,8 +37,10 @@ export class WebSocketMessageHandle {
     eventInvokerMap: {[id: number]: Invoker[]} = {};
 
     emit(message: Message) {
-        for (let invoker of this.getInvokerList(message.getId())) {
-            invoker.handler.call(invoker.target, message);
+        if (message != null) {
+            for (let invoker of this.getInvokerList(message.getId())) {
+                invoker.handler.call(invoker.target, message);
+            }
         }
     }
 
