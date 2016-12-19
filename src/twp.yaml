@@ -1,30 +1,41 @@
 {
-    "LoginRsp": {},
-    "FrameNotice": {
-        "ms": 0
+    # 登录协议
+    LoginRsp: {},
+
+    # frame 通知
+    FrameNotice: {
+        ms: 0
     },
-    "UserDataNotice": {
-        "account": ""
+
+    # 用户数据
+    UserDataNotice: {
+        account: ''
     },
-    "MatchingSuccessRsp": {
-        "selfAccount": "",
-        "accountList": [""]
+
+    # 匹配成功
+    MatchingSuccessRsp: {
+        selfAccount: '',
+        accountList: ['']
     },
-    "GetWalletReq": {
-        "money": 0,
-        "diamond": 0
+
+    # 获取钱包
+    GetWalletReq: {
+        money: 0,
+        diamond: 0
     },
-    "TestObjectReq": {
-        "obj": {"num": 1},
-        "array": [
+
+    # 测试复杂数据
+    TestObjectReq: {
+        obj: {num: 1},
+        array: [
             {
-                "str": "",
-                "subArray": [0],
-                "subObj": {
-                    "num": 1
+                str: '',
+                subArray: [0],
+                subObj: {
+                    num: 1
                 }
             }
         ],
-        "nullobj": null
+        nullobj: null
     }
 }
